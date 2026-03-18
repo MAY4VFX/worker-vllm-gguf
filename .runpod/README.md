@@ -4,7 +4,7 @@ Run LLMs using [vLLM](https://docs.vllm.ai) with an OpenAI-compatible API
 
 ---
 
-[![RunPod](https://api.runpod.io/badge/runpod-workers/worker-vllm)](https://www.runpod.io/console/hub/runpod-workers/worker-vllm)
+[![Runpod](https://api.runpod.io/badge/runpod-workers/worker-vllm)](https://www.runpod.io/console/hub/runpod-workers/worker-vllm)
 
 ---
 
@@ -34,11 +34,11 @@ For complete configuration options, see the [full configuration documentation](h
 
 ## API Usage
 
-This worker supports two API formats: **RunPod native** and **OpenAI-compatible**.
+This worker supports two API formats: **Runpod native** and **OpenAI-compatible**.
 
-### RunPod Native API
+### Runpod Native API
 
-For testing directly in the RunPod UI, use these examples in your endpoint's request tab.
+For testing directly in the Runpod UI, use these examples in your endpoint's request tab.
 
 #### Chat Completions
 
@@ -104,7 +104,7 @@ For direct text generation without chat format:
 
 ### OpenAI-Compatible API
 
-For external clients and SDKs, use the `/openai/v1` path prefix with your RunPod API key.
+For external clients and SDKs, use the `/openai/v1` path prefix with your Runpod API key.
 
 #### Chat Completions
 
@@ -180,7 +180,7 @@ Both APIs return the same response format:
 
 Below are minimal `python` snippets so you can copy-paste to get started quickly.
 
-> Replace `<ENDPOINT_ID>` with your endpoint ID and `<API_KEY>` with a [RunPod API key](https://docs.runpod.io/get-started/api-keys).
+> Replace `<ENDPOINT_ID>` with your endpoint ID and `<API_KEY>` with a [Runpod API key](https://docs.runpod.io/get-started/api-keys).
 
 ### OpenAI compatible API
 
@@ -190,7 +190,7 @@ Minimal Python example using the official `openai` SDK:
 from openai import OpenAI
 import os
 
-# Initialize the OpenAI Client with your RunPod API Key and Endpoint URL
+# Initialize the OpenAI Client with your Runpod API Key and Endpoint URL
 client = OpenAI(
     api_key=os.getenv("RUNPOD_API_KEY"),
     base_url=f"https://api.runpod.ai/v2/<ENDPOINT_ID>/openai/v1",
@@ -223,7 +223,7 @@ for response in response_stream:
     print(response.choices[0].delta.content or "", end="", flush=True)
 ```
 
-### RunPod Native API
+### Runpod Native API
 
 ```python
 import requests

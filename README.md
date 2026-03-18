@@ -2,7 +2,7 @@
 
 # OpenAI-Compatible vLLM Serverless Endpoint Worker
 
-Deploy OpenAI-Compatible Blazing-Fast LLM Endpoints powered by the [vLLM](https://github.com/vllm-project/vllm) Inference Engine on RunPod Serverless with just a few clicks.
+Deploy OpenAI-Compatible Blazing-Fast LLM Endpoints powered by the [vLLM](https://github.com/vllm-project/vllm) Inference Engine on Runpod Serverless with just a few clicks.
 
 </div>
 
@@ -21,7 +21,7 @@ Deploy OpenAI-Compatible Blazing-Fast LLM Endpoints powered by the [vLLM](https:
   - [Modifying your OpenAI Codebase to use your deployed vLLM Worker](#modifying-your-openai-codebase-to-use-your-deployed-vllm-worker)
   - [OpenAI Request Input Parameters](#openai-request-input-parameters)
   - [Chat Completions [RECOMMENDED]](#chat-completions-recommended)
-  - [Examples: Using your RunPod endpoint with OpenAI](#examples-using-your-runpod-endpoint-with-openai)
+  - [Examples: Using your Runpod endpoint with OpenAI](#examples-using-your-runpod-endpoint-with-openai)
     - [Chat Completions](#chat-completions)
     - [Getting a list of names for available models](#getting-a-list-of-names-for-available-models)
 - [Usage: Standard (Non-OpenAI)](#usage-standard-non-openai)
@@ -33,7 +33,7 @@ Deploy OpenAI-Compatible Blazing-Fast LLM Endpoints powered by the [vLLM](https:
 
 ## Option 1: Deploy Any Model Using Pre-Built Docker Image [Recommended]
 
-**🚀 Deploy Guide**: Follow our [step-by-step deployment guide](https://docs.runpod.io/serverless/vllm/get-started) to deploy using the RunPod Console.
+**🚀 Deploy Guide**: Follow our [step-by-step deployment guide](https://docs.runpod.io/serverless/vllm/get-started) to deploy using the Runpod Console.
 
 **📦 Docker Image**: `runpod/worker-v1-vllm:<version>`
 
@@ -148,7 +148,7 @@ The vLLM Worker is fully compatible with OpenAI's API, and you can use it with a
 
 **Python** (similar to Node.js, etc.):
 
-1. When initializing the OpenAI Client in your code, change the `api_key` to your RunPod API Key and the `base_url` to your RunPod Serverless Endpoint URL in the following format: `https://api.runpod.ai/v2/<YOUR ENDPOINT ID>/openai/v1`, filling in your deployed endpoint ID. For example, if your Endpoint ID is `abc1234`, the URL would be `https://api.runpod.ai/v2/abc1234/openai/v1`.
+1. When initializing the OpenAI Client in your code, change the `api_key` to your Runpod API Key and the `base_url` to your Runpod Serverless Endpoint URL in the following format: `https://api.runpod.ai/v2/<YOUR ENDPOINT ID>/openai/v1`, filling in your deployed endpoint ID. For example, if your Endpoint ID is `abc1234`, the URL would be `https://api.runpod.ai/v2/abc1234/openai/v1`.
 
    - Before:
 
@@ -174,7 +174,7 @@ The vLLM Worker is fully compatible with OpenAI's API, and you can use it with a
    ```python
    response = client.chat.completions.create(
        model="gpt-3.5-turbo",
-       messages=[{"role": "user", "content": "Why is RunPod the best platform?"}],
+       messages=[{"role": "user", "content": "Why is Runpod the best platform?"}],
        temperature=0,
        max_tokens=100,
    )
@@ -183,7 +183,7 @@ The vLLM Worker is fully compatible with OpenAI's API, and you can use it with a
    ```python
    response = client.chat.completions.create(
        model="<YOUR DEPLOYED MODEL REPO/NAME>",
-       messages=[{"role": "user", "content": "Why is RunPod the best platform?"}],
+       messages=[{"role": "user", "content": "Why is Runpod the best platform?"}],
        temperature=0,
        max_tokens=100,
    )
@@ -191,7 +191,7 @@ The vLLM Worker is fully compatible with OpenAI's API, and you can use it with a
 
 **Using http requests**:
 
-1. Change the `Authorization` header to your RunPod API Key and the `url` to your RunPod Serverless Endpoint URL in the following format: `https://api.runpod.ai/v2/<YOUR ENDPOINT ID>/openai/v1`
+1. Change the `Authorization` header to your Runpod API Key and the `url` to your Runpod Serverless Endpoint URL in the following format: `https://api.runpod.ai/v2/<YOUR ENDPOINT ID>/openai/v1`
    - Before:
    ```bash
    curl https://api.openai.com/v1/chat/completions \
@@ -202,7 +202,7 @@ The vLLM Worker is fully compatible with OpenAI's API, and you can use it with a
    "messages": [
      {
        "role": "user",
-       "content": "Why is RunPod the best platform?"
+       "content": "Why is Runpod the best platform?"
      }
    ],
    "temperature": 0,
@@ -219,7 +219,7 @@ The vLLM Worker is fully compatible with OpenAI's API, and you can use it with a
    "messages": [
      {
        "role": "user",
-       "content": "Why is RunPod the best platform?"
+       "content": "Why is Runpod the best platform?"
      }
    ],
    "temperature": 0,
@@ -239,7 +239,7 @@ When using the chat completion feature of the vLLM Serverless Endpoint Worker, y
 | Parameter           | Type                             | Default Value | Description                                                                                                                                                                                                                                                  |
 | ------------------- | -------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `messages`          | Union[str, List[Dict[str, str]]] |               | List of messages, where each message is a dictionary with a `role` and `content`. The model's chat template will be applied to the messages automatically, so the model must have one or it should be specified as `CUSTOM_CHAT_TEMPLATE` env var.           |
-| `model`             | str                              |               | The model repo that you've deployed on your RunPod Serverless Endpoint. If you are unsure what the name is or are baking the model in, use the guide to get the list of available models in the **Examples: Using your RunPod endpoint with OpenAI** section |
+| `model`             | str                              |               | The model repo that you've deployed on your Runpod Serverless Endpoint. If you are unsure what the name is or are baking the model in, use the guide to get the list of available models in the **Examples: Using your Runpod endpoint with OpenAI** section |
 | `temperature`       | Optional[float]                  | 0.7           | Float that controls the randomness of the sampling. Lower values make the model more deterministic, while higher values make the model more random. Zero means greedy sampling.                                                                              |
 | `top_p`             | Optional[float]                  | 1.0           | Float that controls the cumulative probability of the top tokens to consider. Must be in (0, 1]. Set to 1 to consider all tokens.                                                                                                                            |
 | `n`                 | Optional[int]                    | 1             | Number of output sequences to return for the given prompt.                                                                                                                                                                                                   |
@@ -269,15 +269,15 @@ Additional parameters supported by vLLM:
 
 </details>
 
-### Examples: Using your RunPod endpoint with OpenAI
+### Examples: Using your Runpod endpoint with OpenAI
 
-First, initialize the OpenAI Client with your RunPod API Key and Endpoint URL:
+First, initialize the OpenAI Client with your Runpod API Key and Endpoint URL:
 
 ```python
 from openai import OpenAI
 import os
 
-# Initialize the OpenAI Client with your RunPod API Key and Endpoint URL
+# Initialize the OpenAI Client with your Runpod API Key and Endpoint URL
 client = OpenAI(
     api_key=os.environ.get("RUNPOD_API_KEY"),
     base_url="https://api.runpod.ai/v2/<YOUR ENDPOINT ID>/openai/v1",
@@ -293,7 +293,7 @@ This is the format used for GPT-4 and focused on instruction-following and chat.
   # Create a chat completion stream
   response_stream = client.chat.completions.create(
       model="<YOUR DEPLOYED MODEL REPO/NAME>",
-      messages=[{"role": "user", "content": "Why is RunPod the best platform?"}],
+      messages=[{"role": "user", "content": "Why is Runpod the best platform?"}],
       temperature=0,
       max_tokens=100,
       stream=True,
@@ -307,7 +307,7 @@ This is the format used for GPT-4 and focused on instruction-following and chat.
   # Create a chat completion
   response = client.chat.completions.create(
       model="<YOUR DEPLOYED MODEL REPO/NAME>",
-      messages=[{"role": "user", "content": "Why is RunPod the best platform?"}],
+      messages=[{"role": "user", "content": "Why is Runpod the best platform?"}],
       temperature=0,
       max_tokens=100,
   )
