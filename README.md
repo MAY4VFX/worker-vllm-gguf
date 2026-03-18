@@ -6,6 +6,9 @@ Deploy OpenAI-Compatible Blazing-Fast LLM Endpoints powered by the [vLLM](https:
 
 </div>
 
+![vLLM worker banner](https://image.runpod.ai/preview/vllm/vllm-banner.png)
+
+
 ## Table of Contents
 
 - [Setting up the Serverless Worker](#setting-up-the-serverless-worker)

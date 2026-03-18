@@ -1,4 +1,4 @@
-![vLLM worker banner](https://cpjrphpz3t5wbwfe.public.blob.vercel-storage.com/worker-vllm_banner.jpeg)
+![vLLM worker banner](https://image.runpod.ai/preview/vllm/vllm-banner.png)
 
 Run LLMs using [vLLM](https://docs.vllm.ai) with an OpenAI-compatible API
 
