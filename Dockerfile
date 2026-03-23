@@ -8,8 +8,11 @@ RUN pip install -U vllm --pre --extra-index-url https://wheels.vllm.ai/nightly
 # Install git first (not available in base image), then install from source
 RUN apt-get update && apt-get install -y --no-install-recommends git && \
     pip install -U "transformers @ git+https://github.com/huggingface/transformers.git@main" && \
-    pip install -U gguf && \
     apt-get purge -y git && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
+
+# Install gguf AFTER transformers to ensure correct version
+# transformers' is_gguf_available() crashes with "Invalid version: N/A" without this
+RUN pip install -U gguf && python3 -c "import gguf; print('gguf version:', gguf.__version__)"
 
 # Patch download_model.py to handle repo_id/filename.gguf format
 COPY src/download_model.py /src/download_model.py
