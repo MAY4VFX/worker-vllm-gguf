@@ -5,29 +5,14 @@ FROM runpod/worker-v1-vllm:v2.14.0
 RUN pip install -U vllm --pre --extra-index-url https://wheels.vllm.ai/nightly
 
 # Upgrade transformers to latest dev — released versions don't support qwen3_5 model_type yet
-# Install git first (not available in base image), then install from source
 RUN apt-get update && apt-get install -y --no-install-recommends git && \
     pip install -U "transformers @ git+https://github.com/huggingface/transformers.git@main" && \
+    pip install --force-reinstall gguf && \
     apt-get purge -y git && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
-# Install gguf package AND monkey-patch is_gguf_available to handle version 'N/A'
-# The gguf package from pip has broken metadata in some environments
-RUN pip install --force-reinstall gguf && \
-    python3 -c "
-import_utils_path = '/usr/local/lib/python3.10/dist-packages/transformers/utils/import_utils.py'
-with open(import_utils_path, 'r') as f:
-    content = f.read()
-# Replace the problematic version check with a try/except
-old = 'return is_available and version.parse(gguf_version) >= version.parse(min_version)'
-new = '''try:
-        return is_available and version.parse(gguf_version) >= version.parse(min_version)
-    except Exception:
-        return is_available'''
-content = content.replace(old, new)
-with open(import_utils_path, 'w') as f:
-    f.write(content)
-print('Patched is_gguf_available in import_utils.py')
-"
+# Patch is_gguf_available() to handle broken gguf version metadata ('N/A')
+COPY src/patch_gguf.py /tmp/patch_gguf.py
+RUN python3 /tmp/patch_gguf.py
 
 # Patch download_model.py to handle repo_id/filename.gguf format
 COPY src/download_model.py /src/download_model.py
