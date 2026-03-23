@@ -22,3 +22,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/worker-vllm-gguf:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/worker-vllm-gguf:${{ github.sha }}
