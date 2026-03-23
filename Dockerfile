@@ -10,5 +10,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends git && \
     pip install -U "transformers @ git+https://github.com/huggingface/transformers.git@main" && \
     apt-get purge -y git && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
-# Patch download_model.py to include *.gguf in MODEL_PATTERNS
+# Patch download_model.py to handle repo_id/filename.gguf format
 COPY src/download_model.py /src/download_model.py
+
+# Use start.sh as entrypoint — runs download_model.py before handler.py
+COPY src/start.sh /src/start.sh
+RUN chmod +x /src/start.sh
+CMD ["/src/start.sh"]
