@@ -10,9 +10,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends git && \
     pip install -U "transformers @ git+https://github.com/huggingface/transformers.git@main" && \
     apt-get purge -y git && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
-# Install gguf AFTER transformers to ensure correct version
-# transformers' is_gguf_available() crashes with "Invalid version: N/A" without this
-RUN pip install -U gguf && python3 -c "import gguf; print('gguf version:', gguf.__version__)"
+# Install gguf package — transformers is_gguf_available() needs importlib.metadata to find it
+# Force reinstall to ensure metadata is registered properly
+RUN pip install --force-reinstall gguf && \
+    python3 -c "import importlib.metadata; print('gguf metadata version:', importlib.metadata.version('gguf'))"
 
 # Patch download_model.py to handle repo_id/filename.gguf format
 COPY src/download_model.py /src/download_model.py
